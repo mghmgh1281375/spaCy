@@ -696,7 +696,9 @@ def build_text_classifier(nr_class, width=64, **cfg):
             output_layer = (
                 zero_init(Affine(nr_class, nr_class * 2, drop_factor=0.0)) >> logistic
             )
-        model = (linear_model | cnn_model) >> output_layer
+        # model = (linear_model | cnn_model) >> output_layer
+        model = cnn_model >> output_layer
+
         model.tok2vec = chain(tok2vec, flatten)
     model.nO = nr_class
     model.lsuv = False
